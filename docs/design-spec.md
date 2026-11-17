@@ -25,8 +25,8 @@
   --text: #1f2328;
   --text-dim: #656d76;
   --text-faint: #8c959f;
-  --brand: #1a9e72;       /* 主色（青绿） */
-  --brand-deep: #0e8f6e;
+  --brand: #2f81f7;       /* 主色（蓝，Jerry 选定） */
+  --brand-deep: #1f6feb;
   --brand-soft: rgba(26, 158, 119, 0.10);
   --accent: #0969da;      /* 次强调 / 链接 */
   --warn: #9a6700;
@@ -51,8 +51,8 @@
   --text: #e6edf3;
   --text-dim: #8b98a9;
   --text-faint: #5c6a7d;
-  --brand: #2dd4a7;
-  --brand-deep: #0e8f6e;
+  --brand: #4493f8;
+  --brand-deep: #1f6feb;
   --brand-soft: rgba(45, 212, 167, 0.12);
   --accent: #58a6ff;
   --warn: #d29922;
