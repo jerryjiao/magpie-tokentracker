@@ -89,10 +89,21 @@
   const T = TEXT[lang];
 
   const $ = (id) => document.getElementById(id);
+  // magpie 的页面 frame 是 sandbox="allow-scripts"（opaque origin）：裸碰 localStorage
+  // 直接抛 SecurityError，会炸掉整个脚本、页面停在骨架屏。包一层降级成无记忆，
+  // 代价只是沙盒里记不住上次选的周期。
+  const store = {
+    get(key) {
+      try { return localStorage.getItem(key); } catch { return null; }
+    },
+    set(key, value) {
+      try { localStorage.setItem(key, value); } catch { /* opaque origin：放弃记忆 */ }
+    },
+  };
   const PERIODS = ["today", "7d", "30d"];
   // URL ?period= 优先（boot/分享链接直达），其次记住的选择，默认「今天」。
   const periodParam = params.get("period");
-  const savedPeriod = localStorage.getItem("magpie-tokentracker-period");
+  const savedPeriod = store.get("magpie-tokentracker-period");
   const state = {
     period: PERIODS.includes(periodParam) ? periodParam : PERIODS.includes(savedPeriod) ? savedPeriod : "today",
     data: null,
@@ -473,7 +484,7 @@
 
   function selectPeriod(period) {
     state.period = period;
-    localStorage.setItem("magpie-tokentracker-period", period);
+    store.set("magpie-tokentracker-period", period);
     document.querySelectorAll("#periods button").forEach((b) => {
       b.setAttribute("aria-selected", String(b.dataset.period === period));
     });

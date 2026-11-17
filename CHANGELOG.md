@@ -23,6 +23,11 @@
 
 ## [未发布]
 
+### 修复
+
+- 看板在 magpie 沙盒 frame（opaque origin）里打开后全是「—」：`page/app.js` 裸访问 `localStorage` 抛 SecurityError 炸掉整个脚本（0.2.0「记住周期」引入），现在包一层安全存储，沙盒里降级为不记忆周期。
+- 带路页（`page/boot.js`）跳转前先探活看板服务：fetch 优先，被 CSP 的 connect-src 拦截时降级 `<script>` 加载探测（`/api/healthz?probe=` 回合法 JS，nosniff 的 MIME 检查可过）；两层都确认不了时保持原直接跳转。服务确认没起来时显示红色提示与「重试」按钮，不再跳到浏览器连接拒绝页；服务恢复后点重试即可进入看板。发版时记得把 `server.mjs` 的 BUILD 4 → 5（healthz 新增 probe 语义，指纹区分新旧服务）。
+
 ### 规划中
 
 - 发布到 npm：支持 `magpie plugin add magpie-tokentracker` 从 npm 直接安装。

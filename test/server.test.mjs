@@ -131,6 +131,27 @@ test("服务端：页面、静态资源和 CSP", async (t) => {
   assert.equal(missing.status, 404);
 });
 
+test("服务端：/api/healthz 指纹与 ?probe 回合法 JS", async (t) => {
+  const board = await startServer({ port: 0, autoStart: false });
+  t.after(() => board.close());
+
+  const plain = await fetch(`http://127.0.0.1:${board.port}/api/healthz`);
+  assert.equal(plain.status, 200);
+  const data = await plain.json();
+  assert.equal(data.ok, true);
+  assert.equal(data.service, "magpie-tokentracker");
+  assert.match(plain.headers.get("content-type"), /application\/json/);
+
+  // 带路页用 <script> 探测本接口：nosniff 严格校验 MIME，返回 JSON 会被拦成
+  // onerror（与连接拒绝不可区分），所以 ?probe 必须是 text/javascript + 合法 JS。
+  const probe = await fetch(`http://127.0.0.1:${board.port}/api/healthz?probe=1`);
+  assert.equal(probe.status, 200);
+  assert.match(probe.headers.get("content-type"), /text\/javascript/);
+  const text = await probe.text();
+  assert.doesNotThrow(() => new Function(text));
+  assert.match(text, /magpie-tokentracker/);
+});
+
 test("服务端：只认回环 Host，也只收 GET", async (t) => {
   const tracker = await startFakeTracker();
   const board = await startServer({ port: 0, tokentrackerPort: tracker.port, autoStart: false });

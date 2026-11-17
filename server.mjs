@@ -486,6 +486,18 @@ export async function startServer(rawOptions = {}) {
 
       if (route === "/api/healthz") {
         // 指纹给「端口被占时复用还是等它退」的判定用
+        if (url.searchParams.has("probe")) {
+          // 带路页的跨源 <script> 探测：nosniff 会严格校验 MIME，返回 JSON 会被拦成
+          // onerror（与连接拒绝不可区分），所以这里回一段合法 JS 让 onload 干净触发。
+          const body = "true;/* magpie-tokentracker healthz */";
+          res.writeHead(200, {
+            "Content-Type": "text/javascript; charset=utf-8",
+            "Cache-Control": "no-store",
+            "Content-Length": Buffer.byteLength(body),
+          });
+          res.end(body);
+          return;
+        }
         json(res, 200, { ok: true, service: SERVICE_NAME, build: BUILD });
         return;
       }
