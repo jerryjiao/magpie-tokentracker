@@ -28,7 +28,7 @@ import { apiGet, ensureRunning, probe, resolvePort, baseUrl } from "./lib/tokent
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SERVICE_NAME = "magpie-tokentracker";
-const BUILD = 5; // 服务行为变了就 +1：端口被占时老 build 不复用，等它退
+const BUILD = 6; // 服务行为变了就 +1：端口被占时老 build 不复用，等它退
 const REBIND_MS = 20000; // magpie 自升级交接时旧宿主几秒内退出，等它即可
 const REBIND_STEP_MS = 1000;
 const PAGE_DIR = path.join(HERE, "page");
