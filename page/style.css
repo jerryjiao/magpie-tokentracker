@@ -244,19 +244,44 @@ button.link {
 
 /* ---------- 趋势柱 ---------- */
 
+/* 纵轴和横轴分开摆：柱子高度只按绘图区算，标签绝对定位，不占柱子的百分比基准。 */
+.chart-wrap { display: grid; grid-template-columns: 46px 1fr; gap: 4px; }
+
+.chart-y { position: relative; height: 150px; }
+.chart-y span {
+  position: absolute;
+  right: 0;
+  transform: translateY(50%);
+  font-size: 10px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.chart-plot { position: relative; height: 150px; margin-bottom: 18px; }
+.chart-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--line);
+  pointer-events: none;
+}
+.chart-line.is-base { border-top-color: var(--muted); opacity: 0.55; }
+
 .chart-bars {
+  position: absolute;
+  inset: 0;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   align-items: end;
   gap: 4px;
-  height: 150px;
 }
 .col {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: flex-end;
+  justify-content: center;
   height: 100%;
   min-width: 0;
 }
@@ -267,15 +292,16 @@ button.link {
   border-radius: 3px 3px 1px 1px;
   background: linear-gradient(180deg, var(--brand), var(--brand-deep));
 }
-.col-label.is-blank { visibility: hidden; }
-
 .col-label {
-  margin-top: 4px;
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 10px;
   white-space: nowrap;
   color: var(--muted);
-  white-space: nowrap;
 }
+.col-label.is-blank { visibility: hidden; }
 
 /* ---------- 配额 ---------- */
 

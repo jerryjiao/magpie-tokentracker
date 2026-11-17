@@ -237,19 +237,34 @@
     }
     const max = Math.max(...points.map((p) => p.tokens), 1);
     $("trend-hint").textContent = fmtTokens(points.reduce((s, p) => s + p.tokens, 0));
-    // 24 根柱子逐个标 00:00…23:00 会糊成一片：每 3 根一个刻度，标签只写小时数。
-    const dense = series && series.kind === "hourly" && points.length > 8;
-    const tick = (p) => (dense ? String(Number(String(p.label).split(":")[0]) || 0) : p.label);
-    el.innerHTML = `<div class="chart-bars">${points
-      .map((p, i) => {
-        const h = Math.max(p.tokens ? 3 : 0, Math.round((p.tokens / max) * 100));
-        const show = !dense || i % 3 === 0;
-        return `<div class="col" title="${escapeHtml(p.label)} · ${escapeHtml(fmtTokens(p.tokens))}">
-          <span class="col-bar" style="height:${h}%"></span>
-          <span class="col-label${show ? "" : " is-blank"}">${escapeHtml(show ? tick(p) : "")}</span>
-        </div>`;
-      })
-      .join("")}</div>`;
+    // 刻度最多 10 个：24 小时的每小时图只标每 3 小时（标签只写小时数），30 天的图也只标每 3 天。
+    const every = Math.max(1, Math.ceil(points.length / 10));
+    const hourly = series && series.kind === "hourly";
+    const tick = (p) => (hourly ? String(Number(String(p.label).split(":")[0]) || 0) : p.label);
+    // 纵轴：0 / 一半 / 最高，横线对齐刻度，柱子高度只按绘图区算。
+    const yTicks = [
+      { pct: 100, value: max },
+      { pct: 50, value: max / 2 },
+      { pct: 0, value: 0 },
+    ];
+    el.innerHTML = `<div class="chart-wrap">
+      <div class="chart-y">${yTicks
+        .map((t) => `<span style="bottom:${t.pct}%">${escapeHtml(fmtTokens(t.value))}</span>`)
+        .join("")}</div>
+      <div class="chart-plot">
+        ${yTicks.map((t) => `<span class="chart-line${t.pct ? "" : " is-base"}" style="bottom:${t.pct}%"></span>`).join("")}
+        <div class="chart-bars">${points
+          .map((p, i) => {
+            const h = Math.max(p.tokens ? 3 : 0, Math.round((p.tokens / max) * 100));
+            const show = i % every === 0;
+            return `<div class="col" title="${escapeHtml(p.label)} · ${escapeHtml(fmtTokens(p.tokens))}">
+              <span class="col-bar" style="height:${h}%"></span>
+              <span class="col-label${show ? "" : " is-blank"}">${escapeHtml(show ? tick(p) : "")}</span>
+            </div>`;
+          })
+          .join("")}</div>
+      </div>
+    </div>`;
   }
 
   // /api/usage 透传 TokenTracker 的字段名（input/output/cacheRead/cacheHitRate/conversations），
