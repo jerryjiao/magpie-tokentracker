@@ -1,8 +1,8 @@
 {
   "name": "magpie-tokentracker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "在 magpie 窗口里追踪 TokenTracker 的 token 用量：今天 / 7 天 / 30 天的 token 与花费，按编程工具和模型拆分。",
+  "description": "在 magpie 窗口里追踪 TokenTracker 的 AI 用量：今天 / 7 天 / 30 天的 token 与花费，按编程工具和模型拆分，带订阅配额、近一年热力图、成就与官方账号入口。",
   "type": "module",
   "main": "./index.mjs",
   "files": [
@@ -46,8 +46,8 @@
   "magpie": {
     "name": "TokenTracker",
     "summary": {
-      "en": "Token usage tracked by TokenTracker: tokens and cost for today, 7 days and 30 days, split by coding tool and model, with an hourly/daily trend. Runs a zero-dependency local service that reads this machine's TokenTracker data over its loopback API.",
-      "zh": "TokenTracker 追踪的 token 用量：今天 / 7 天 / 30 天的 token 与花费，按编程工具和模型拆分，带小时级与每日趋势。自带零依赖本机服务，通过回环接口读本机 TokenTracker 的数据。"
+      "en": "Token usage tracked by TokenTracker: tokens and cost for today, 7 days and 30 days, split by coding tool and model, with hourly/daily trends, subscription quota windows, a one-year activity heatmap, achievements, and the official account / cloud sync entry. Runs a zero-dependency local service that reads this machine's TokenTracker data over its loopback API.",
+      "zh": "TokenTracker 追踪的 token 用量：今天 / 7 天 / 30 天的 token 与花费，按编程工具和模型拆分，带小时级与每日趋势、订阅配额窗口、近一年活动热力图、成就徽章，以及官方账号 / 云同步入口。自带零依赖本机服务，通过回环接口读本机 TokenTracker 的数据。"
     },
     "page": {
       "title": "TokenTracker",

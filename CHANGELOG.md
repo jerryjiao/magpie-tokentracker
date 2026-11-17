@@ -5,15 +5,26 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [0.2.0] - 2026-11-17
+
+### 新增
+
+- 看板 UI 按 `docs/design-spec.md`（v1）全面改版：默认深色主题、`?theme=` 跟随 magpie 深浅设置、指标卡与渐变趋势柱图、条形排行、自绘组件样式。
+- 订阅配额面板：`/api/limits` 透传 TokenTracker 的 `tokentracker-usage-limits`，按 provider 展示用量窗口百分比、重置时间与倒计时（<70% 绿 / 70–85% 橙 / >85% 红），60 秒缓存。
+- 近一年活动热力图：`/api/heatmap` 透传 `tokentracker-usage-heatmap`，GitHub 风格周列 × 7 行格子，带月份标签与活跃/连续天数，5 分钟缓存。
+- 成就徽章面板：`/api/achievements` 透传 `tokentracker-achievements`，展示各成就 tier 与进度，5 分钟缓存。
+- 官方账号状态与云入口：`/api/cloud` 读 `~/.tokentracker/tracker/config.json` 判定官方账号登录态（ID 掩码显示）；云面板给出官方看板登录、`tokentracker device-login`、tokentracker.cc 与 Cloud 介绍入口。本地功能不受登录影响，本机数据不上传。
+- 三个新面板失败时各自显示「暂不可用」，不阻塞主用量区；整站离线仍走原离线面板（命令 + 原因 + 重试）。
+
+### 变更
+
+- 服务探活逻辑统一：四个接口共用一份探活与 60 秒失败冷却，避免重复 spawn；`BUILD` 3 → 4。
+- 默认周期恢复为「今天」，`?period=` URL 参数优先于本地记忆。
+
 ## [未发布]
 
 ### 规划中
 
-- 看板 UI 改版：按 `docs/design-spec.md`（v1）对齐深色/浅色主题、指标卡与趋势柱图版式。
-- 配额面板：展示各 provider 的用量窗口百分比与重置时间。
-- 活动热力图：GitHub 风格的按日 tokens 热力图。
-- 成就徽章面板。
-- 看板显示 TokenTracker 官方账号登录状态与官方云同步 / 全球排行榜入口（登录不影响本地功能）。
 - 发布到 npm：支持 `magpie plugin add magpie-tokentracker` 从 npm 直接安装。
 
 ## [0.1.0] - 2026-11-16

@@ -4,10 +4,9 @@
 [![License: MIT](https://img.shields.io/github/license/jerryjiao/magpie-tokentracker)](./LICENSE)
 [![node](https://img.shields.io/node/v/magpie-tokentracker)](https://www.npmjs.com/package/magpie-tokentracker)
 
-在 magpie 窗口里追踪本机 [TokenTracker](https://github.com/xiufengsun/TokenTracker) 的 AI 用量：今天 / 7 天 / 30 天的 token 用量、花费、缓存命中、会话数，按编程工具和模型拆分，带小时级与每日趋势。零依赖。
+在 magpie 窗口里追踪本机 [TokenTracker](https://github.com/xiufengsun/TokenTracker) 的 AI 用量：今天 / 7 天 / 30 天的 token 用量、花费、缓存命中、会话数，按编程工具和模型拆分，带小时级与每日趋势；另有订阅配额、近一年活动热力图、成就徽章，以及官方账号 / 云同步入口。零依赖。
 
-<!-- TODO(截图): 看板截图放 docs/screenshots/ 目录（建议命名 board.png），补齐后取消下面注释 -->
-<!-- ![本机看板截图](docs/screenshots/board.png) -->
+![本机看板截图（深色）](docs/screenshots/dashboard-dark-today.png)
 
 ## 安装（发布后，从 npm）
 
@@ -29,7 +28,7 @@ lib/tokentracker.mjs TokenTracker 探活、自动拉起、API 调用
 page/index.html      magpie 托管的带路页（bridge → 导航到本机服务）
 page/boot.js         读 bridge（语言/主题/端口/magpie.service）后跳转
 page/board.html|app.js|style.css   看板本体（服务端拼成全内联单页，见「注意」）
-test/*.test.mjs      15 个测试（node --test）
+test/*.test.mjs      28 个测试（node --test）
 test/fixtures/       从真实 TokenTracker 接口抓的样例
 docs/                设计规范、发布文档（不进 npm 包）
 ```

@@ -1,0 +1,840 @@
+{
+ "from": "2026-09-09",
+ "to": "2026-11-17",
+ "scope": "all",
+ "excluded_sources": [],
+ "week_starts_on": "sun",
+ "active_days": 69,
+ "streak_days": 0,
+ "weeks": [
+  [
+   {
+    "day": "2026-09-09",
+    "total_tokens": 17061741,
+    "billable_total_tokens": 17061741,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 17061741
+    }
+   },
+   {
+    "day": "2026-09-10",
+    "total_tokens": 532897829,
+    "billable_total_tokens": 532897829,
+    "level": 3,
+    "models": {
+     "GLM-5.3": 422527096,
+     "GLM-5.3-Flash": 106999642,
+     "deepseek-v4-flash": 3371091
+    }
+   },
+   {
+    "day": "2026-09-11",
+    "total_tokens": 219377984,
+    "billable_total_tokens": 219377984,
+    "level": 2,
+    "models": {
+     "GLM-5.3": 49595840,
+     "GLM-5.3-Flash": 103539428,
+     "deepseek-flash": 66242716
+    }
+   },
+   {
+    "day": "2026-09-12",
+    "total_tokens": 37860119,
+    "billable_total_tokens": 37860119,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 37311608,
+     "GLM-5.3-Flash": 548511
+    }
+   },
+   {
+    "day": "2026-09-13",
+    "total_tokens": 315528492,
+    "billable_total_tokens": 315528492,
+    "level": 2,
+    "models": {
+     "deepseek-flash": 1132723,
+     "GLM-5.3": 153121639,
+     "GLM-5.3-Flash": 161274130
+    }
+   },
+   {
+    "day": "2026-09-14",
+    "total_tokens": 515281830,
+    "billable_total_tokens": 515281830,
+    "level": 3,
+    "models": {
+     "GLM-5.3": 343576070,
+     "GLM-5.3-Flash": 171705760
+    }
+   },
+   {
+    "day": "2026-09-15",
+    "total_tokens": 268047395,
+    "billable_total_tokens": 268047395,
+    "level": 2,
+    "models": {
+     "GLM-5.3-Flash": 70010807,
+     "GLM-5.3": 198036588
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-09-16",
+    "total_tokens": 103654353,
+    "billable_total_tokens": 103654353,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 37120421,
+     "GLM-5.3-Flash": 66533932
+    }
+   },
+   {
+    "day": "2026-09-17",
+    "total_tokens": 56096951,
+    "billable_total_tokens": 56096951,
+    "level": 1,
+    "models": {
+     "GLM-5.3-Flash": 31830005,
+     "GLM-5.3": 24266946
+    }
+   },
+   {
+    "day": "2026-09-18",
+    "total_tokens": 9742105,
+    "billable_total_tokens": 9742105,
+    "level": 1,
+    "models": {
+     "GLM-5.3-Flash": 9742105
+    }
+   },
+   {
+    "day": "2026-09-19",
+    "total_tokens": 49726542,
+    "billable_total_tokens": 49726542,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 49726542
+    }
+   },
+   {
+    "day": "2026-09-20",
+    "total_tokens": 73443098,
+    "billable_total_tokens": 73443098,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 59316968,
+     "GLM-5.3-Flash": 14126130
+    }
+   },
+   {
+    "day": "2026-09-21",
+    "total_tokens": 39275727,
+    "billable_total_tokens": 39275727,
+    "level": 1,
+    "models": {
+     "GLM-5.3-Flash": 3428570,
+     "GLM-5.3": 35847157
+    }
+   },
+   {
+    "day": "2026-09-22",
+    "total_tokens": 74599094,
+    "billable_total_tokens": 74599094,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 49632665,
+     "GLM-5.3-Flash": 24966429
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-09-23",
+    "total_tokens": 17251388,
+    "billable_total_tokens": 17251388,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 17251388
+    }
+   },
+   {
+    "day": "2026-09-24",
+    "total_tokens": 19540151,
+    "billable_total_tokens": 19540151,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 19540151
+    }
+   },
+   {
+    "day": "2026-09-25",
+    "total_tokens": 1727738,
+    "billable_total_tokens": 1727738,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 1727738
+    }
+   },
+   {
+    "day": "2026-09-26",
+    "total_tokens": 44861508,
+    "billable_total_tokens": 44861508,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 44861508
+    }
+   },
+   {
+    "day": "2026-09-27",
+    "total_tokens": 46874722,
+    "billable_total_tokens": 46874722,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 46874722
+    }
+   },
+   {
+    "day": "2026-09-28",
+    "total_tokens": 353877187,
+    "billable_total_tokens": 353877187,
+    "level": 2,
+    "models": {
+     "GLM-5.3": 190246510,
+     "GLM-5.3-Flash": 163630677
+    }
+   },
+   {
+    "day": "2026-09-29",
+    "total_tokens": 468777773,
+    "billable_total_tokens": 468777773,
+    "level": 3,
+    "models": {
+     "GLM-5.3": 462123570,
+     "GLM-5.3-Flash": 6654203
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-09-30",
+    "total_tokens": 353287386,
+    "billable_total_tokens": 353287386,
+    "level": 2,
+    "models": {
+     "GLM-5.3": 322113707,
+     "GLM-5.3-Flash": 31173679
+    }
+   },
+   {
+    "day": "2026-10-01",
+    "total_tokens": 30054013,
+    "billable_total_tokens": 30054013,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 24784395,
+     "GLM-5.3-Flash": 5269618
+    }
+   },
+   {
+    "day": "2026-10-02",
+    "total_tokens": 40307961,
+    "billable_total_tokens": 40307961,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 33643304,
+     "GLM-5.3-Flash": 6664657
+    }
+   },
+   {
+    "day": "2026-10-03",
+    "total_tokens": 0,
+    "billable_total_tokens": 0,
+    "level": 0,
+    "models": null
+   },
+   {
+    "day": "2026-10-04",
+    "total_tokens": 89681033,
+    "billable_total_tokens": 89681033,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 86590378,
+     "GLM-5.3-Flash": 3090655
+    }
+   },
+   {
+    "day": "2026-10-05",
+    "total_tokens": 191903377,
+    "billable_total_tokens": 191903377,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 74578421,
+     "GLM-5.3-Flash": 117324956
+    }
+   },
+   {
+    "day": "2026-10-06",
+    "total_tokens": 464540932,
+    "billable_total_tokens": 464540932,
+    "level": 3,
+    "models": {
+     "GLM-5.3": 388453120,
+     "GLM-5.3-Flash": 76087812
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-10-07",
+    "total_tokens": 173159924,
+    "billable_total_tokens": 173159924,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 142569119,
+     "GLM-5.3-Flash": 30590805
+    }
+   },
+   {
+    "day": "2026-10-08",
+    "total_tokens": 559359991,
+    "billable_total_tokens": 559359991,
+    "level": 3,
+    "models": {
+     "GLM-5.3": 543386915,
+     "GLM-5.3-Flash": 15973076
+    }
+   },
+   {
+    "day": "2026-10-09",
+    "total_tokens": 378239478,
+    "billable_total_tokens": 378239478,
+    "level": 2,
+    "models": {
+     "GLM-5.3": 325967893,
+     "GLM-5.3-Flash": 51664977,
+     "workbuddy/kimi-k3-1": 606608
+    }
+   },
+   {
+    "day": "2026-10-10",
+    "total_tokens": 171855029,
+    "billable_total_tokens": 171855029,
+    "level": 1,
+    "models": {
+     "workbuddy/kimi-k3-1": 972895,
+     "GLM-5.3-Flash": 2074573,
+     "cursor/claude-opus-5-5@1m": 5049681,
+     "cursor/grok-4.7@500k": 26690218,
+     "GLM-5.3-FLASHX": 120462323,
+     "deepseek-flash": 1746087,
+     "GLM-5.3": 14859252
+    }
+   },
+   {
+    "day": "2026-10-11",
+    "total_tokens": 43111150,
+    "billable_total_tokens": 43111150,
+    "level": 1,
+    "models": {
+     "GLM-5.3-FLASHX": 4334262,
+     "GLM-5.3": 30946082,
+     "openrouter/anthropic/claude-haiku-5.5": 837840,
+     "openrouter/anthropic/claude-sonnet-5.5": 3125559,
+     "cursor/grok-4.7@500k": 3867407
+    }
+   },
+   {
+    "day": "2026-10-12",
+    "total_tokens": 94200052,
+    "billable_total_tokens": 94200052,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 38572495,
+     "GLM-5.3-FLASHX": 37413819,
+     "cursor/grok-4.7@500k": 18213738
+    }
+   },
+   {
+    "day": "2026-10-13",
+    "total_tokens": 522758795,
+    "billable_total_tokens": 522758795,
+    "level": 3,
+    "models": {
+     "GLM-5.3-FLASHX": 125900520,
+     "cursor/grok-4.7@500k": 131688537,
+     "workbuddy/kimi-k3-1": 1578967,
+     "GLM-5.3": 203767349,
+     "grok/grok-4.7": 1143974,
+     "group/auto-deepseek-v4-1-flash": 10168680,
+     "codex/gpt-6.1-sol": 48510768
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-10-14",
+    "total_tokens": 798902640,
+    "billable_total_tokens": 798902640,
+    "level": 4,
+    "models": {
+     "GLM-5.3": 143838182,
+     "group/auto-gpt-6-1-sol": 70094123,
+     "GLM-5.3-FLASHX": 61573698,
+     "group/smart-split": 85194879,
+     "codex/gpt-6.1-sol": 520809,
+     "group/smart-split-2": 433357322,
+     "cursor/grok-4.7@500k": 4323627
+    }
+   },
+   {
+    "day": "2026-10-15",
+    "total_tokens": 178531633,
+    "billable_total_tokens": 178531633,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 395233,
+     "GLM-5.3-FLASHX": 16150188,
+     "unknown": 0,
+     "GLM-5.3-Flash": 2210299,
+     "cursor/grok-4.7@500k": 3742426,
+     "GLM-5.3": 136964896,
+     "group/smart-split-2": 431700,
+     "group/smart-split": 18636891
+    }
+   },
+   {
+    "day": "2026-10-16",
+    "total_tokens": 417525964,
+    "billable_total_tokens": 417525964,
+    "level": 3,
+    "models": {
+     "claude-opus-5-5": 165760561,
+     "claude-haiku-5-5": 35675389,
+     "unknown": 0,
+     "deepseek-flash": 250870,
+     "GLM-5.3-FLASHX": 180919920,
+     "GLM-5.3": 32125292,
+     "GLM-5.3-Flash": 1811993,
+     "group/smart-split": 364477,
+     "codex/gpt-6-astra": 617462
+    }
+   },
+   {
+    "day": "2026-10-17",
+    "total_tokens": 66061102,
+    "billable_total_tokens": 66061102,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 59363303,
+     "unknown": 0,
+     "GLM-5.3": 6697799
+    }
+   },
+   {
+    "day": "2026-10-18",
+    "total_tokens": 160317272,
+    "billable_total_tokens": 160317272,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 160317272,
+     "unknown": 0
+    }
+   },
+   {
+    "day": "2026-10-19",
+    "total_tokens": 117088369,
+    "billable_total_tokens": 117088369,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 116627595,
+     "claude-haiku-5-5": 460774,
+     "unknown": 0
+    }
+   },
+   {
+    "day": "2026-10-20",
+    "total_tokens": 125811120,
+    "billable_total_tokens": 125811120,
+    "level": 1,
+    "models": {
+     "claude-haiku-5-5": 730348,
+     "claude-opus-5-5": 18108400,
+     "claude-sonnet-5-5": 70967961,
+     "unknown": 0,
+     "GLM-5.3": 33596717,
+     "GLM-5.3-FLASHX": 704336,
+     "cursor/claude-sonnet-5-5@1m": 1703358
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-10-21",
+    "total_tokens": 128943355,
+    "billable_total_tokens": 128943355,
+    "level": 1,
+    "models": {
+     "claude-sonnet-5-5": 108729419,
+     "claude-opus-5-5": 9733738,
+     "claude-haiku-5-5": 126583,
+     "unknown": 0,
+     "GLM-5.3": 10034821,
+     "GLM-5.3-FLASHX": 318794
+    }
+   },
+   {
+    "day": "2026-10-22",
+    "total_tokens": 38265030,
+    "billable_total_tokens": 38265030,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 3815327,
+     "claude-sonnet-5-5": 16067831,
+     "unknown": 0,
+     "GLM-5.3": 6247005,
+     "cursor/claude-sonnet-5-5@1m": 4456535,
+     "workbuddy/kimi-k3-1": 6253378,
+     "codex/gpt-6-luna": 423194,
+     "group/smart-split": 1001760
+    }
+   },
+   {
+    "day": "2026-10-23",
+    "total_tokens": 35011619,
+    "billable_total_tokens": 35011619,
+    "level": 1,
+    "models": {
+     "claude-haiku-5-5": 269916,
+     "claude-sonnet-5-5": 6912192,
+     "claude-opus-5-5": 26022921,
+     "unknown": 0,
+     "group/smart-split": 1806590
+    }
+   },
+   {
+    "day": "2026-10-24",
+    "total_tokens": 80614292,
+    "billable_total_tokens": 80614292,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 76281205,
+     "unknown": 0,
+     "group/smart-split": 4333087
+    }
+   },
+   {
+    "day": "2026-10-25",
+    "total_tokens": 112703335,
+    "billable_total_tokens": 112703335,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 107645474,
+     "unknown": 0,
+     "GLM-5.3-FLASHX": 1210037,
+     "group/smart-split": 3847824
+    }
+   },
+   {
+    "day": "2026-10-26",
+    "total_tokens": 153732018,
+    "billable_total_tokens": 153732018,
+    "level": 1,
+    "models": {
+     "claude-opus-5-5": 152845787,
+     "unknown": 0,
+     "group/smart-split": 886231
+    }
+   },
+   {
+    "day": "2026-10-27",
+    "total_tokens": 204023931,
+    "billable_total_tokens": 204023931,
+    "level": 2,
+    "models": {
+     "grok-4.7@500k": 45551882,
+     "glm-5.3-flash": 28415532,
+     "sn-deepseek-v4-1-flash-1017": 87594019,
+     "deepseek-v4.1-flash": 9584550,
+     "sn-kimi-k3": 4140571,
+     "GLM-5.3-FLASHX": 997201,
+     "GLM-5.3-Flash": 17498091,
+     "gemini-4-argon": 2039847,
+     "GLM-5.3": 6968709,
+     "unknown": 0,
+     "group/smart-split": 1233529
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-10-28",
+    "total_tokens": 139220196,
+    "billable_total_tokens": 139220196,
+    "level": 1,
+    "models": {
+     "deepseek-v4.1-flash": 69799053,
+     "kimi-k3.1-pro": 1598375,
+     "grok-4.7@500k": 37091842,
+     "anthropic/claude-sonnet-5.5": 145036,
+     "sn-kimi-k3": 8668110,
+     "sn-deepseek-v4-1-flash-1017": 125854,
+     "unknown": 0,
+     "GLM-5.3-Flash": 3700747,
+     "GLM-5.3": 1010014,
+     "cursor/grok-4.7@500k": 17081165
+    }
+   },
+   {
+    "day": "2026-10-29",
+    "total_tokens": 49198537,
+    "billable_total_tokens": 49198537,
+    "level": 1,
+    "models": {
+     "deepseek-v4.1-flash": 17431030,
+     "kimi-k3.1-pro": 653632,
+     "grok-4.7@500k": 2777434,
+     "GLM-5.3": 249709,
+     "claude-sonnet-5-5": 11814834,
+     "claude-haiku-5-5": 1924813,
+     "unknown": 0,
+     "cursor/grok-4.7@500k": 6245332,
+     "opencode-go/claude-haiku-5-5": 6982052,
+     "auto/grok-4.7@500k": 287359,
+     "zcode/GLM-5.3-Flash": 832342
+    }
+   },
+   {
+    "day": "2026-10-30",
+    "total_tokens": 72657535,
+    "billable_total_tokens": 72657535,
+    "level": 1,
+    "models": {
+     "claude-sonnet-5-5": 63278583,
+     "unknown": 0,
+     "group/smart-split": 6326017,
+     "GLM-5.3": 3052935
+    }
+   },
+   {
+    "day": "2026-10-31",
+    "total_tokens": 88258605,
+    "billable_total_tokens": 88258605,
+    "level": 1,
+    "models": {
+     "claude-sonnet-5-5": 58415166,
+     "claude-opus-5.5": 29843439,
+     "unknown": 0
+    }
+   },
+   {
+    "day": "2026-11-01",
+    "total_tokens": 73351266,
+    "billable_total_tokens": 73351266,
+    "level": 1,
+    "models": {
+     "claude-sonnet-5-5": 26253132,
+     "claude-opus-5.5": 44245936,
+     "unknown": 0,
+     "GLM-5.3": 2852198
+    }
+   },
+   {
+    "day": "2026-11-02",
+    "total_tokens": 43256171,
+    "billable_total_tokens": 43256171,
+    "level": 1,
+    "models": {
+     "claude-opus-5.5": 40242051,
+     "unknown": 0,
+     "codex/gpt-6-luna": 2351977,
+     "zcode/GLM-5.3-Flash": 80140,
+     "GLM-5.3": 582003
+    }
+   },
+   {
+    "day": "2026-11-03",
+    "total_tokens": 29325440,
+    "billable_total_tokens": 29325440,
+    "level": 1,
+    "models": {
+     "claude-opus-5.5": 28739611,
+     "unknown": 0,
+     "GLM-5.3": 585829
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-11-04",
+    "total_tokens": 30539329,
+    "billable_total_tokens": 30539329,
+    "level": 1,
+    "models": {
+     "claude-opus-5.5": 30068961,
+     "unknown": 0,
+     "wps-lingxi/kimi-k3.1-pro": 176363,
+     "GLM-5.3": 294005
+    }
+   },
+   {
+    "day": "2026-11-05",
+    "total_tokens": 45438125,
+    "billable_total_tokens": 45438125,
+    "level": 1,
+    "models": {
+     "claude-opus-5.5": 43950412,
+     "unknown": 0,
+     "GLM-5.3": 1487713
+    }
+   },
+   {
+    "day": "2026-11-06",
+    "total_tokens": 24457066,
+    "billable_total_tokens": 24457066,
+    "level": 1,
+    "models": {
+     "claude-opus-5.5": 2098818,
+     "kimi-k3.1-pro": 21761403,
+     "unknown": 0,
+     "GLM-5.3": 596845
+    }
+   },
+   {
+    "day": "2026-11-07",
+    "total_tokens": 30601196,
+    "billable_total_tokens": 30601196,
+    "level": 1,
+    "models": {
+     "claude-opus-5.5": 500528,
+     "kimi-k3.1-pro": 20082024,
+     "claude-opus-5-5@1m": 1637420,
+     "GLM-5.3": 8381224,
+     "unknown": 0
+    }
+   },
+   {
+    "day": "2026-11-08",
+    "total_tokens": 94501419,
+    "billable_total_tokens": 94501419,
+    "level": 1,
+    "models": {
+     "GLM-5.3": 38011155,
+     "claude-opus-5-5@1m": 525819,
+     "kimi-k3.1-pro": 13065540,
+     "unknown": 0,
+     "deepseek-v4.1-flash": 36914044,
+     "glm-5.3": 5984861
+    }
+   },
+   {
+    "day": "2026-11-09",
+    "total_tokens": 187701324,
+    "billable_total_tokens": 187701324,
+    "level": 1,
+    "models": {
+     "kimi-k3.1-pro": 3009247,
+     "unknown": 0,
+     "deepseek-v4.1-flash": 63885085,
+     "glm-5.3": 279378,
+     "group/smart-split": 119306465,
+     "hy4-free": 1221149
+    }
+   },
+   {
+    "day": "2026-11-10",
+    "total_tokens": 204604430,
+    "billable_total_tokens": 204604430,
+    "level": 2,
+    "models": {
+     "group/smart-split": 176149011,
+     "newapi/claude-opus-5-5": 14853666,
+     "unknown": 0,
+     "glm-4.5-flash": 1042855,
+     "deepseek-v4.1-flash": 12558898
+    }
+   }
+  ],
+  [
+   {
+    "day": "2026-11-11",
+    "total_tokens": 106246462,
+    "billable_total_tokens": 106246462,
+    "level": 1,
+    "models": {
+     "newapi/claude-opus-5-5": 7808311,
+     "unknown": 0,
+     "smart-split": 85070469,
+     "glm-4.5-flash": 790383,
+     "group/smart-split": 11028805,
+     "zhipu/glm-5.3": 1548494
+    }
+   },
+   {
+    "day": "2026-11-12",
+    "total_tokens": 234430327,
+    "billable_total_tokens": 234430327,
+    "level": 2,
+    "models": {
+     "ligong": 41256,
+     "GLM-5.3": 10090,
+     "smart-split": 234378981
+    }
+   },
+   {
+    "day": "2026-11-13",
+    "total_tokens": 191609791,
+    "billable_total_tokens": 191609791,
+    "level": 1,
+    "models": {
+     "smart-split": 191609791
+    }
+   },
+   {
+    "day": "2026-11-14",
+    "total_tokens": 30054586,
+    "billable_total_tokens": 30054586,
+    "level": 1,
+    "models": {
+     "smart-split": 30054586
+    }
+   },
+   {
+    "day": "2026-11-15",
+    "total_tokens": 167515793,
+    "billable_total_tokens": 167515793,
+    "level": 1,
+    "models": {
+     "smart-split": 167515793
+    }
+   },
+   {
+    "day": "2026-11-16",
+    "total_tokens": 328854446,
+    "billable_total_tokens": 328854446,
+    "level": 2,
+    "models": {
+     "smart-split": 284348750,
+     "deepseek-flash": 389780,
+     "grok-4.7@500k": 14007729,
+     "glm-5.3-flash": 28872467,
+     "deepseek-v4.1-flash": 1235720
+    }
+   },
+   {
+    "day": "2026-11-17",
+    "total_tokens": 17300414,
+    "billable_total_tokens": 17300414,
+    "level": 1,
+    "models": {
+     "smart-split": 11316447,
+     "glm-5.3-flash": 5983967
+    }
+   }
+  ]
+ ],
+ "total_cost_usd": 4181.761664028002
+}

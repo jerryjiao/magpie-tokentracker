@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>TokenTracker</title>
+  <!--__INLINE_STYLE__-->
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <div class="brand">
+        <span id="status" class="status" data-state="warn" title=""></span>
+        <div class="titles">
+          <h1 id="title">TokenTracker</h1>
+          <p id="sub"></p>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="segmented" id="periods" role="tablist">
+          <button type="button" role="tab" data-period="today" aria-selected="false">今天</button>
+          <button type="button" role="tab" data-period="7d" aria-selected="true">7 天</button>
+          <button type="button" role="tab" data-period="30d" aria-selected="false">30 天</button>
+        </div>
+        <button type="button" id="refresh" class="ghost">刷新</button>
+        <button type="button" id="cloud-btn" class="ghost" aria-expanded="false" aria-controls="cloud-panel">云</button>
+      </div>
+    </header>
+
+    <section class="cards" id="cards">
+      <article class="card" id="card-tokens">
+        <p class="card-label" data-k="tokens"></p>
+        <p class="card-value" id="v-tokens">—</p>
+        <p class="card-meta" id="m-tokens"></p>
+      </article>
+      <article class="card" id="card-cost">
+        <p class="card-label" data-k="cost"></p>
+        <p class="card-value" id="v-cost">—</p>
+        <p class="card-meta" id="m-cost"></p>
+      </article>
+      <article class="card" id="card-cache">
+        <p class="card-label" data-k="cache"></p>
+        <p class="card-value" id="v-cache">—</p>
+        <p class="card-meta" id="m-cache"></p>
+      </article>
+      <article class="card" id="card-sessions">
+        <p class="card-label" data-k="sessions"></p>
+        <p class="card-value" id="v-sessions">—</p>
+        <p class="card-meta" id="m-sessions"></p>
+      </article>
+    </section>
+
+    <section class="panel wide" id="trend">
+      <header class="panel-head">
+        <h2 id="trend-title"></h2>
+        <span id="trend-hint" class="hint"></span>
+      </header>
+      <div class="chart" id="chart"></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel" id="sources">
+        <header class="panel-head"><h2 id="sources-title"></h2></header>
+        <div class="bars" id="source-bars"></div>
+      </div>
+      <div class="panel" id="models">
+        <header class="panel-head"><h2 id="models-title"></h2></header>
+        <div class="bars" id="model-bars"></div>
+      </div>
+    </section>
+
+    <section class="panel wide" id="limits">
+      <header class="panel-head"><h2 id="limits-title"></h2></header>
+      <div class="quotas" id="limit-rows"></div>
+    </section>
+
+    <section class="panel wide" id="heatmap">
+      <header class="panel-head">
+        <h2 id="heatmap-title"></h2>
+        <span id="heatmap-hint" class="hint"></span>
+      </header>
+      <div class="heat-scroll" id="heat-scroll"></div>
+    </section>
+
+    <section class="panel wide" id="achievements">
+      <header class="panel-head"><h2 id="achievements-title"></h2></header>
+      <div class="badges" id="badge-rows"></div>
+    </section>
+
+    <section class="panel wide" id="cloud-panel" hidden>
+      <header class="panel-head"><h2 id="cloud-title"></h2></header>
+      <div id="cloud-body"></div>
+    </section>
+
+    <section class="panel offline" id="offline" hidden>
+      <h2 id="offline-title"></h2>
+      <p id="offline-text"></p>
+      <pre id="offline-command"></pre>
+      <p id="offline-detail" class="hint"></p>
+      <button type="button" id="offline-retry" class="ghost"></button>
+    </section>
+
+    <footer class="foot">
+      <span id="foot-source"></span>
+      <span id="foot-updated"></span>
+    </footer>
+  </main>
+  <!--__INLINE_SCRIPT__-->
+</body>
+</html>
