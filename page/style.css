@@ -68,12 +68,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: nowrap; /* 标题和这排按钮要同一行，窄了只收标题 */
   margin-bottom: 18px;
 }
 
-.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 auto; }
 
 .status {
   width: 10px;
@@ -85,10 +85,17 @@ body {
 .status[data-state="ok"] { background: var(--brand); }
 .status[data-state="bad"] { background: var(--danger); }
 
-.titles h1 { margin: 0; font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
-.titles p { margin: 1px 0 0; color: var(--muted); font-size: 12.5px; }
+.titles { min-width: 0; }
+.titles h1 {
+  margin: 0; font-size: 18px; font-weight: 650; letter-spacing: -0.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.titles p {
+  margin: 1px 0 0; color: var(--muted); font-size: 12.5px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 
-.actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.actions { display: flex; align-items: center; gap: 8px; flex: none; flex-wrap: nowrap; }
 
 .segmented {
   display: flex;
@@ -260,9 +267,12 @@ button.link {
   border-radius: 3px 3px 1px 1px;
   background: linear-gradient(180deg, var(--brand), var(--brand-deep));
 }
+.col-label.is-blank { visibility: hidden; }
+
 .col-label {
   margin-top: 4px;
   font-size: 10px;
+  white-space: nowrap;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -434,6 +444,11 @@ body.offline #trend { display: none; }
 
 @media (max-width: 720px) {
   .page { padding: 14px 12px 24px; }
+  .top { gap: 8px; }
+  .brand { gap: 8px; }
+  .titles h1 { font-size: 16px; }
+  .titles p { display: none; } /* 一行放不下时先让副标题让位 */
+  .actions { gap: 6px; }
   .cards { grid-template-columns: 1fr 1fr; }
   .grid { grid-template-columns: 1fr; }
   .quotas { grid-template-columns: 1fr; }

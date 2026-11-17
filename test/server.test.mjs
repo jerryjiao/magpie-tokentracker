@@ -118,9 +118,9 @@ test("服务端：页面、静态资源和 CSP", async (t) => {
   // 外链不能整页跳走：沙盒里跳到 7680 就是白屏，而且没有返回。
   assert.match(html, /noopener,noreferrer/);
   assert.doesNotMatch(html, /location\.href = url/);
-  // 从插件页跳过来时，看板页要留一条回退的路：白屏也能退回带路页重试。
-  assert.match(html, /id="back"/);
-  assert.match(html, /history\.back\(\)/);
+  // 重载交给 magpie 页面右上角的 ⟳；页面里不再放「← 返回插件页」（只是绕一圈重载）。
+  assert.doesNotMatch(html, /id="back"/);
+  assert.doesNotMatch(html, /history\.back\(\)/);
   // 云面板要在卡片区之前：在最底部展开、视口不动，看起来像按钮没反应。
   assert.ok(
     html.indexOf('id="cloud-panel"') < html.indexOf('class="cards"'),
@@ -136,6 +136,10 @@ test("服务端：页面、静态资源和 CSP", async (t) => {
   for (const name of ["c.input", "c.cacheRead", "c.cacheHitRate", "c.conversations"]) {
     assert.ok(appJs.includes(name), `看板要兼容 ${name}`);
   }
+  // 模型只有 id 没有 name，标签必须兜底到 id，否则「按模型」只剩空条。
+  assert.match(appJs, /r\.name \|\| r\.id/);
+  // 每小时 24 根柱子逐个标时间会糊住，只标每 3 根。
+  assert.match(appJs, /is-blank/);
 
   const css = await fetch(`http://127.0.0.1:${board.port}/style.css`);
   assert.equal(css.status, 200);

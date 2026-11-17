@@ -26,7 +26,6 @@
       sub: "本机 TokenTracker 追踪的 token 与花费",
       today: "今天", d7: "7 天", d30: "30 天",
       refresh: "刷新", cloud: "云同步",
-      back: "← 返回插件页",
       cloudHint: "官方账号登录、云同步和排行榜",
       cloudOpenBlocked: "这个窗口打不开外链。直接跳过去会变成白屏，也回不来。把下面的地址复制到浏览器打开，看板留在这里。",
       tokens: "总 Token", cost: "花费", cache: "缓存读取", sessions: "会话",
@@ -61,7 +60,6 @@
       sub: "Token usage and cost tracked by the local TokenTracker",
       today: "Today", d7: "7 days", d30: "30 days",
       refresh: "Refresh", cloud: "Cloud",
-      back: "← Back",
       cloudHint: "Official account, cloud sync, and the leaderboard",
       cloudOpenBlocked: "This window can't open outside links. Leaving this page turns it into a blank screen with no way back. Copy the address below into a browser. This board stays here.",
       tokens: "Total tokens", cost: "Cost", cache: "Cache read", sessions: "Sessions",
@@ -182,8 +180,7 @@
     $("title").textContent = T.title;
     $("sub").textContent = T.sub;
     $("refresh").textContent = T.refresh;
-    $("back").textContent = T.back;
-    $("cloud-btn").textContent = T.cloud;
+        $("cloud-btn").textContent = T.cloud;
     $("cloud-btn").title = T.cloudHint;
     $("cloud-open-text").textContent = T.cloudOpenBlocked;
     $("offline-title").textContent = T.offlineTitle;
@@ -240,12 +237,16 @@
     }
     const max = Math.max(...points.map((p) => p.tokens), 1);
     $("trend-hint").textContent = fmtTokens(points.reduce((s, p) => s + p.tokens, 0));
+    // 24 根柱子逐个标 00:00…23:00 会糊成一片：每 3 根一个刻度，标签只写小时数。
+    const dense = series && series.kind === "hourly" && points.length > 8;
+    const tick = (p) => (dense ? String(Number(String(p.label).split(":")[0]) || 0) : p.label);
     el.innerHTML = `<div class="chart-bars">${points
-      .map((p) => {
+      .map((p, i) => {
         const h = Math.max(p.tokens ? 3 : 0, Math.round((p.tokens / max) * 100));
+        const show = !dense || i % 3 === 0;
         return `<div class="col" title="${escapeHtml(p.label)} · ${escapeHtml(fmtTokens(p.tokens))}">
           <span class="col-bar" style="height:${h}%"></span>
-          <span class="col-label">${escapeHtml(p.label)}</span>
+          <span class="col-label${show ? "" : " is-blank"}">${escapeHtml(show ? tick(p) : "")}</span>
         </div>`;
       })
       .join("")}</div>`;
@@ -275,13 +276,9 @@
     $("v-sessions").textContent = fmtInt(sessions);
     $("m-sessions").textContent = T.sessionsHint;
 
-    renderBars("source-bars", data.sources, (r) => r.tokens, (r) => r.name);
-    renderBars(
-      "model-bars",
-      data.models,
-      (r) => r.tokens,
-      (r) => r.name,
-    );
+    renderBars("source-bars", data.sources, (r) => r.tokens, (r) => r.name || r.id);
+    // 接口给的是模型 id（如 smart-split、glm-5.3-flash），没有 name；不兜底就只剩空条。
+    renderBars("model-bars", data.models, (r) => r.tokens, (r) => r.name || r.id);
     renderChart(data.series);
 
     const tt = data.tokentracker || {};
@@ -566,17 +563,8 @@
     load({ force: true });
     for (const name of Object.keys(panels)) loadPanel(name, { force: true });
   });
-  // 看板是插件页 frame 里跳过来的，回退一页就是 magpie 里的带路页。
-  // 直接用浏览器打开时 frame 没有上一页，隐藏按钮。
-  const back = $("back");
-  if (back) {
-    if (history.length > 1) {
-      back.hidden = false;
-      back.addEventListener("click", () => history.back());
-    } else {
-      back.hidden = true;
-    }
-  }
+  // 重载走 magpie 页面右上角的 ⟳。以前这里有个「← 返回插件页」，它只是让 frame
+  // 回退一页再自动跳回来，等于重新加载，和 ⟳ 重复，看着像没反应，已删掉。
   $("cloud-btn").addEventListener("click", toggleCloud);
   $("offline-retry").addEventListener("click", () => load({ force: true }));
   document.addEventListener("visibilitychange", () => {
