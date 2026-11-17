@@ -5,6 +5,14 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [0.2.2] - 2026-11-17
+
+### 文档
+
+- README 对齐 0.2.1 的实际功能：安装改为 npm 已发布；新增「看板内容」一节；接口表补齐配额、热力图、成就、官方云与静态路由；选项表补环境变量列；补充找不到页面 / 白屏的排查顺序。
+- 截图按 0.2.1 界面重拍：浅色全页、深色全页、云同步面板，替换掉旧界面截图（缓存全 0、按模型空白、无纵轴）。
+- 代码无变更，`BUILD` 仍为 6。
+
 ## [0.2.1] - 2026-11-17
 
 ### 新增
@@ -55,6 +63,7 @@
 - 端口复用：同款服务连续两次探活成功即复用，否则每秒重试绑定、最多等 20 秒。
 - 看板为全内联单页：服务端把 css/js 内联进 HTML 并注入服务地址，适配 magpie 页面 opaque origin frame 的 CSP 限制。
 
+[0.2.2]: https://github.com/jerryjiao/magpie-tokentracker/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/jerryjiao/magpie-tokentracker/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/jerryjiao/magpie-tokentracker/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/jerryjiao/magpie-tokentracker/releases/tag/v0.1.0

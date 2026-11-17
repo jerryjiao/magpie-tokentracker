@@ -1,6 +1,6 @@
 {
   "name": "magpie-tokentracker",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "在 magpie 窗口里追踪 TokenTracker 的 AI 用量：今天 / 7 天 / 30 天的 token 与花费，按编程工具和模型拆分，带订阅配额、近一年热力图、成就与官方账号入口。",
   "type": "module",
   "main": "./index.mjs",
