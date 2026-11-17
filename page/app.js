@@ -251,15 +251,28 @@
       .join("")}</div>`;
   }
 
+  // /api/usage 透传 TokenTracker 的字段名（input/output/cacheRead/cacheHitRate/conversations），
+  // 这里两个名字都认，免得版本差异让卡片掉成 0。
+  function pick(...values) {
+    for (const value of values) if (typeof value === "number" && Number.isFinite(value)) return value;
+    return 0;
+  }
+
   function render(data) {
     const c = data.cards;
+    const input = pick(c.inputTokens, c.input);
+    const output = pick(c.outputTokens, c.output);
+    const cacheRead = pick(c.cacheReadTokens, c.cacheRead);
+    const cacheWrite = pick(c.cacheWriteTokens, c.cacheWrite);
+    const cacheHitRatio = pick(c.cacheHitRatio, c.cacheHitRate);
+    const sessions = pick(c.sessions, c.conversations);
     $("v-tokens").textContent = fmtTokens(c.tokens);
-    $("m-tokens").textContent = `${T.input} ${fmtTokens(c.inputTokens)} · ${T.output} ${fmtTokens(c.outputTokens)}`;
+    $("m-tokens").textContent = `${T.input} ${fmtTokens(input)} · ${T.output} ${fmtTokens(output)}`;
     $("v-cost").textContent = fmtCost(c.costUsd);
-    $("m-cost").textContent = c.sessions ? `${fmtCost(c.costUsd / c.sessions)} ${T.perSession}` : "";
-    $("v-cache").textContent = fmtTokens(c.cacheReadTokens);
-    $("m-cache").textContent = `${T.cacheHit} ${fmtPct(c.cacheHitRatio)} · ${T.cacheWrite} ${fmtTokens(c.cacheWriteTokens)}`;
-    $("v-sessions").textContent = fmtInt(c.sessions);
+    $("m-cost").textContent = sessions ? `${fmtCost(c.costUsd / sessions)} ${T.perSession}` : "";
+    $("v-cache").textContent = fmtTokens(cacheRead);
+    $("m-cache").textContent = `${T.cacheHit} ${fmtPct(cacheHitRatio)} · ${T.cacheWrite} ${fmtTokens(cacheWrite)}`;
+    $("v-sessions").textContent = fmtInt(sessions);
     $("m-sessions").textContent = T.sessionsHint;
 
     renderBars("source-bars", data.sources, (r) => r.tokens, (r) => r.name);

@@ -131,6 +131,12 @@ test("服务端：页面、静态资源和 CSP", async (t) => {
   assert.equal(js.status, 200);
   assert.match(js.headers.get("content-type"), /javascript/);
 
+  // /api/usage 是透传 TokenTracker 的字段名，卡片必须两套名字都认，否则掉成 0。
+  const appJs = await js.text();
+  for (const name of ["c.input", "c.cacheRead", "c.cacheHitRate", "c.conversations"]) {
+    assert.ok(appJs.includes(name), `看板要兼容 ${name}`);
+  }
+
   const css = await fetch(`http://127.0.0.1:${board.port}/style.css`);
   assert.equal(css.status, 200);
 
