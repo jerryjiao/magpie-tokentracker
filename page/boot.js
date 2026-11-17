@@ -2,9 +2,11 @@
 //
 // 优先用 window.magpie.service（magpie web 在自己域名下转发），桌面窗口没有它，
 // 回退 http://127.0.0.1:<port>/。端口从插件选项读，跟服务启动时用的是同一个值。
-// 跳转前对服务做一次「尽力而为」的探活：带路页的 CSP 限制了 connect-src，
-// fetch 可能被拦，被拦时降级用 <script> 加载探测；两层都确认不了就保持原来
-// 的直接跳转——探活只会在「确认服务没起来」时拦下跳转，不会比没有探活更差。
+//
+// 探活只在 service 转发模式（magpie web）下做：那是同源请求，结果可信。
+// 桌面窗口的带路页 CSP 会把跨源 fetch 和 <script> 全部拦掉（0.1.4345 实测），
+// 双失败和服务真死无法区分——在桌面版里做跨源探测只会把活服务误判成死服务，
+// 所以桌面版保持原来的直接跳转：跳转本身就是最快的验证。
 (async () => {
   const DEFAULT_PORT = 3491;
   const words = {
@@ -16,7 +18,7 @@
       probing: "正在检查看板服务…",
       ready: "已定位看板服务，正在跳转…",
       readyLocal: "已就绪，正在打开本机看板…",
-      down: "看板服务没有启动（端口无响应）：重启 magpie 后再试，或点下面的重试。",
+      down: "看板服务没有启动：重启 magpie 后再试，或点下面的重试。",
       retrying: "正在重试…",
       retry: "重试",
     },
@@ -28,7 +30,7 @@
       probing: "Checking the board service…",
       ready: "Board located, navigating…",
       readyLocal: "Ready — opening the local board…",
-      down: "The board service is not running (port unreachable). Restart magpie and try again, or click retry.",
+      down: "The board service is not running. Restart magpie and try again, or click retry.",
       retrying: "Retrying…",
       retry: "Retry",
     },
@@ -96,9 +98,7 @@
 
   const base = service || `http://127.0.0.1:${port}`;
 
-  // 探活两连：fetch 直探（CSP 若放行则最准），失败再试 <script> 加载探测
-  // （服务端给 /api/healthz?probe= 回合法 JS，nosniff 下 MIME 检查也能过）。
-  // 返回 true=活、false=确认不通、null=确认不了（CSP 全拦），只在 false 时拦跳转。
+  // 探活：只该在 service 转发模式（同源，结果可信）下调用。
   async function probeService(root) {
     try {
       const ctrl = new AbortController();
@@ -107,24 +107,9 @@
       clearTimeout(timer);
       if (res.ok) return true;
     } catch {
-      // CSP 拦截或网络失败，落到 script 探测
+      // 转发路径也不通
     }
-    return await new Promise((resolve) => {
-      const el = document.createElement("script");
-      let settled = false;
-      const timer = setTimeout(() => finish(null), 3000);
-      const finish = (value) => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timer);
-        el.remove();
-        resolve(value);
-      };
-      el.onload = () => finish(true);
-      el.onerror = () => finish(false);
-      el.src = `${root}/api/healthz?probe=${Date.now()}`;
-      (document.head || document.documentElement).appendChild(el);
-    });
+    return false;
   }
 
   function addRetry(onRetry) {
@@ -173,15 +158,18 @@
     return;
   }
 
-  say(w.probing);
-  setBar(84);
-  const alive = await probeService(base);
-
-  if (alive === false) {
-    setBar(100, true);
-    say(w.down, true);
-    addRetry(gotoBoard);
-    return;
+  if (service) {
+    // magpie.web：转发是同源请求，探活结果可信，失败再拦。
+    say(w.probing);
+    setBar(84);
+    const alive = await probeService(service);
+    if (alive === false) {
+      setBar(100, true);
+      say(w.down, true);
+      addRetry(gotoBoard);
+      return;
+    }
   }
+  // 桌面窗口：跨源探测会被 CSP 全拦、与服务真死无法区分，直接跳转。
   gotoBoard();
 })();
