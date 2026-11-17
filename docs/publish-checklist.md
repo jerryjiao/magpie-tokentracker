@@ -1,6 +1,6 @@
 # magpie-tokentracker 发布手册
 
-本文是发布操作手册，只记录步骤，**不代表已执行**。执行前确认：截图已补进 `docs/screenshots/`、CHANGELOG 已更新到待发版本、`package.json` 的 `private: true` 已移除（见下文问题清单）。
+本文是发布操作手册，只记录步骤，**不代表已执行**。执行前确认：CHANGELOG 已更新到待发版本、`package.json` 的 `private: true` 已移除（见下文问题清单）。README 不放截图（2026-11-17 起）：npm 页面渲染的是包内 README，本地相对路径的图片在 npm 上是破图，所以界面图一律不进 README、`docs/screenshots/` 已删除。
 
 ## 一、GitHub（public repo：jerryjiao/magpie-tokentracker）
 
@@ -107,4 +107,4 @@ magpie plugin add magpie-tokentracker    # 真机冒烟：侧栏出现「TokenTr
 3. `funding` 指向 `https://github.com/sponsors/jerryjiao`；若未开通 GitHub Sponsors，发布前删除该字段或改成真实链接（不删也不影响安装）。
 4. GitHub repo 与 npm 包都尚未创建，README badges、CHANGELOG 底部的 compare/tag 链接、`repository/bugs/homepage` 在创建前均为死链——属预期，创建后自动生效。
 5. README「结构」一节的测试数量（15 个）会随并行开发漂移，发布前以 `npm test` 实际输出为准。
-6. README 截图占位（`docs/screenshots/board.png`）待补，发布前建议补齐并取消注释。
+6. README 不再放截图（2026-11-17 起）：npm 页面用的是包内 README，相对路径的 `docs/screenshots/*.png` 在 npm 上是破图；这批图片连同目录已删除，README 里不再有图片占位。
