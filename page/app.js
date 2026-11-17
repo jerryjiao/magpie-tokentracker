@@ -529,8 +529,9 @@
       $("cloud-body").innerHTML = `<p class="empty">${escapeHtml(T.loading)}</p>`;
       loadCloud();
     }
-    // 面板在页面最底部。不滚过去，点「云同步」看起来像没反应。
-    panel.scrollIntoView({ block: "start" });
+    // 面板在头部下面。视口被滚到底时点「云同步」看不到它，会以为按钮没反应。
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    panel.scrollIntoView({ block: "nearest" });
   }
 
   function startTimer() {

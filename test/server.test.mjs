@@ -121,6 +121,11 @@ test("服务端：页面、静态资源和 CSP", async (t) => {
   // 从插件页跳过来时，看板页要留一条回退的路：白屏也能退回带路页重试。
   assert.match(html, /id="back"/);
   assert.match(html, /history\.back\(\)/);
+  // 云面板要在卡片区之前：在最底部展开、视口不动，看起来像按钮没反应。
+  assert.ok(
+    html.indexOf('id="cloud-panel"') < html.indexOf('class="cards"'),
+    "云同步面板要排在卡片区前面",
+  );
 
   const js = await fetch(`http://127.0.0.1:${board.port}/app.js`);
   assert.equal(js.status, 200);

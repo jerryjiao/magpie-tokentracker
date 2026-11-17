@@ -28,7 +28,7 @@ import { apiGet, ensureRunning, probe, resolvePort, baseUrl } from "./lib/tokent
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SERVICE_NAME = "magpie-tokentracker";
-const BUILD = 4; // 服务行为变了就 +1：端口被占时老 build 不复用，等它退
+const BUILD = 5; // 服务行为变了就 +1：端口被占时老 build 不复用，等它退
 const REBIND_MS = 20000; // magpie 自升级交接时旧宿主几秒内退出，等它即可
 const REBIND_STEP_MS = 1000;
 const PAGE_DIR = path.join(HERE, "page");
@@ -359,9 +359,6 @@ export async function startServer(rawOptions = {}) {
 
   const server = createServer(async (req, res) => {
     guardHeaders(res);
-    if (process.env.MAGPIE_TOKENTRACKER_DEBUG) {
-      console.log(`[debug] ${req.method} ${req.url} host=${req.headers.host} origin=${req.headers.origin} ua=${(req.headers["user-agent"] || "").slice(0, 40)}`);
-    }
     try {
       if (!hostIsLoopback(req)) {
         res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
