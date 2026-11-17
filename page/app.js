@@ -14,7 +14,7 @@
     ? langParam
     : (navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en";
   const zh = lang === "zh";
-  // boot.js 会把 magpie 的深浅设置以 ?theme=dark|light 传进来；缺省保持深色。
+  // boot.js 会把 magpie 的深浅设置以 ?theme=dark|light 传进来；缺省保持浅色。
   const themeParam = params.get("theme");
   if (themeParam === "dark" || themeParam === "light") {
     document.documentElement.dataset.theme = themeParam;

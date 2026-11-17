@@ -9,7 +9,7 @@
 
 ### 新增
 
-- 看板 UI 按 `docs/design-spec.md`（v1）全面改版：默认深色主题、`?theme=` 跟随 magpie 深浅设置、指标卡与渐变趋势柱图、条形排行、自绘组件样式。
+- 看板 UI 按 `docs/design-spec.md`（v1）全面改版：浅色为默认主题、`?theme=dark` 跟随 magpie 深色模式、指标卡与渐变趋势柱图、条形排行、自绘组件样式。
 - 订阅配额面板：`/api/limits` 透传 TokenTracker 的 `tokentracker-usage-limits`，按 provider 展示用量窗口百分比、重置时间与倒计时（<70% 绿 / 70–85% 橙 / >85% 红），60 秒缓存。
 - 近一年活动热力图：`/api/heatmap` 透传 `tokentracker-usage-heatmap`，GitHub 风格周列 × 7 行格子，带月份标签与活跃/连续天数，5 分钟缓存。
 - 成就徽章面板：`/api/achievements` 透传 `tokentracker-achievements`，展示各成就 tier 与进度，5 分钟缓存。

@@ -35,10 +35,6 @@
     "url": "https://github.com/jerryjiao/magpie-tokentracker/issues"
   },
   "homepage": "https://github.com/jerryjiao/magpie-tokentracker#readme",
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/jerryjiao"
-  },
   "scripts": {
     "start": "node index.mjs",
     "test": "node --test test/*.test.mjs"

@@ -5,7 +5,7 @@
 
 ## 1. 原则
 
-- 深色优先（magpie 页面默认深色），同时支持浅色（`data-theme="light"`）。
+- 浅色为默认主题（Jerry 指定）；magpie 深色模式时 boot.js 传 `?theme=dark`，页面经 `data-theme="dark"` 切深色。
 - 信息密度适中：一屏看清「花了多少、花在哪、还剩多少」。
 - 数字用等宽字体 + `font-variant-numeric: tabular-nums`，对齐不跳动。
 - 动效克制：150ms ease 过渡即可，不做大动画。
@@ -13,52 +13,56 @@
 
 ## 2. CSS 变量（直接拷进 style.css / 站点 css）
 
+默认浅色；`:root[data-theme="dark"]` 提供深色覆盖（`?theme=dark` 时生效）。
+
 ```css
-:root, [data-theme="dark"] {
-  --bg: #0b0f14;          /* 页面底 */
-  --surface: #121821;     /* 卡片 */
-  --surface-2: #1a2330;   /* 卡片内嵌套块 */
-  --border: #233041;
-  --text: #e6edf3;
-  --text-dim: #8b98a9;
-  --text-faint: #5c6a7d;
-  --brand: #2dd4a7;       /* 主色（青绿） */
-  --brand-deep: #1f9d78;
-  --brand-soft: rgba(45, 212, 167, 0.12);
-  --accent: #58a6ff;      /* 次强调 / 链接 */
-  --warn: #d29922;
-  --danger: #f85149;
-  --grid: #1d2735;        /* 图表网格线 */
-  --heat-0: #161b22;      /* 热力图 5 档 */
-  --heat-1: #0e4429;
-  --heat-2: #006d32;
-  --heat-3: #26a641;
-  --heat-4: #39d353;
+:root {
+  color-scheme: light;
+  --bg: #f6f8fa;          /* 页面底 */
+  --surface: #ffffff;     /* 卡片 */
+  --surface-2: #f0f3f7;   /* 卡片内嵌套块 */
+  --border: #d8dee6;
+  --text: #1f2328;
+  --text-dim: #656d76;
+  --text-faint: #8c959f;
+  --brand: #1a9e72;       /* 主色（青绿） */
+  --brand-deep: #0e8f6e;
+  --brand-soft: rgba(26, 158, 119, 0.10);
+  --accent: #0969da;      /* 次强调 / 链接 */
+  --warn: #9a6700;
+  --danger: #d1242f;
+  --grid: #e4e9ee;        /* 图表网格线 */
+  --heat-0: #ebedf0;      /* 热力图 5 档 */
+  --heat-1: #9be9a8;
+  --heat-2: #40c463;
+  --heat-3: #30a14e;
+  --heat-4: #216e39;
   --radius: 12px;
   --radius-sm: 8px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
-[data-theme="light"] {
-  --bg: #f6f8fa;
-  --surface: #ffffff;
-  --surface-2: #f0f3f7;
-  --border: #d0d7de;
-  --text: #1f2328;
-  --text-dim: #59636e;
-  --text-faint: #8c959f;
-  --brand: #1a9e77;
-  --brand-deep: #147a5c;
-  --brand-soft: rgba(26, 158, 119, 0.10);
-  --accent: #0969da;
-  --warn: #9a6700;
-  --danger: #cf222e;
-  --grid: #e4e9ee;
-  --heat-0: #eaeef2;
-  --heat-1: #9be9a8;
-  --heat-2: #40c463;
-  --heat-3: #30a14e;
-  --heat-4: #216e39;
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0f14;
+  --surface: #121821;
+  --surface-2: #1b2430;
+  --border: #263140;
+  --text: #e6edf3;
+  --text-dim: #8b98a9;
+  --text-faint: #5c6a7d;
+  --brand: #2dd4a7;
+  --brand-deep: #0e8f6e;
+  --brand-soft: rgba(45, 212, 167, 0.12);
+  --accent: #58a6ff;
+  --warn: #d29922;
+  --danger: #f85149;
+  --grid: #1d2735;
+  --heat-0: #161b22;
+  --heat-1: #0e4429;
+  --heat-2: #006d32;
+  --heat-3: #26a641;
+  --heat-4: #39d353;
 }
 ```
 
