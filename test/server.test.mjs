@@ -359,3 +359,77 @@ test("服务端：/api/cloud 读本机官方配置返回登录态与链接", asy
   });
   assert.equal(badHost, 403);
 });
+
+// 端口接手：magpie 重启插件宿主时，旧宿主的服务还在应答，新宿主会先复用；
+// 旧宿主随后随 magpie 退出，端口立刻空掉。不接手的话页面就永远跳到一个死地址
+// （2026-11-17 实机事故：16:33:04 绑定 → 16:33:49 宿主重启复用 → 16:33:51 端口死）。
+test("服务端：复用的服务退出后自己接手端口", async (t) => {
+  const fake = createServer((req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    if (String(req.url).startsWith("/api/healthz")) {
+      res.end(JSON.stringify({ ok: true, service: "magpie-tokentracker", build: 6 }));
+      return;
+    }
+    res.statusCode = 404;
+    res.end("{}");
+  });
+  await new Promise((resolve) => fake.listen(0, "127.0.0.1", resolve));
+  const port = fake.address().port;
+
+  const board = await startServer({ port, autoStart: false });
+  t.after(() => board.close());
+  assert.equal(board.reused, true, "对方活着时应该复用，不去抢端口");
+
+  await new Promise((resolve) => fake.close(resolve)); // 旧宿主退出
+  const deadline = Date.now() + 6000;
+  let health = null;
+  while (Date.now() < deadline) {
+    try {
+      const res = await fetch(`http://127.0.0.1:${port}/api/healthz`);
+      if (res.ok) {
+        health = await res.json();
+        break;
+      }
+    } catch {
+      // 还没接手
+    }
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  assert.ok(health, "复用之后对方退出，应该自己绑上端口");
+  assert.equal(health.service, "magpie-tokentracker");
+});
+
+// 端口被一个不应答的东西占着（升级交接里旧进程还没退干净）：不能把插件加载
+// 拖到 magpie 的 20 秒上限上（超了它判加载失败、不再重试，服务就永远起不来）。
+// 正确行为：一个绑定预算内先返回（pending），对方一退就自己绑。
+test("服务端：端口被占死时先返回，别拖过插件加载上限", async (t) => {
+  const squatter = createServer(() => {
+    // 故意不应答：像正在退出的旧进程
+  });
+  await new Promise((resolve) => squatter.listen(0, "127.0.0.1", resolve));
+  const port = squatter.address().port;
+
+  const started = Date.now();
+  const board = await startServer({ port, autoStart: false });
+  const waited = Date.now() - started;
+  t.after(() => board.close());
+  assert.equal(board.pending, true);
+  assert.ok(waited < 15000, `插件加载预算内要返回，实际等了 ${waited}ms`);
+
+  await new Promise((resolve) => squatter.close(resolve));
+  const deadline = Date.now() + 6000;
+  let ok = false;
+  while (Date.now() < deadline) {
+    try {
+      const res = await fetch(`http://127.0.0.1:${port}/api/healthz`);
+      if (res.ok) {
+        ok = true;
+        break;
+      }
+    } catch {
+      // 还没接手
+    }
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  assert.ok(ok, "占着端口的进程退出后应该自己绑上");
+});

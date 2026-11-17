@@ -5,6 +5,19 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [0.2.3] - 2026-11-17
+
+### 修复
+
+- 带路页永远停在「正在打开本机看板…」不动（用户报的「又卡到这里」）。根因是端口复用的一个漏洞：magpie 重启插件宿主时，旧宿主的服务还在应答，新宿主把它当成「长期存在」直接复用；旧宿主随 magpie 退出，端口立刻空掉，而新宿主已经不再重绑，带路页跳过去就是死地址。WebKit 又把失败的那次导航和成功分不开（magpie 源码注释：leaves the frame on the page's own "connecting…" for good），页面就永远停住。实机时间线对得上：16:33:04 绑定 3491 → 16:33:49 宿主重启 → 16:33:51 `same service already on 3491; reusing it` → 16:33:51 宿主退出，3491 再没人接。
+- 复用之后现在会守望端口（每 750ms 探活）：对方一停应答就自己绑，日志打 `took over from a service that quit`。真被另一个活着的实例占着时不抢，等它退。
+- 插件加载不再可能被端口等待拖过 magpie 的 20 秒加载上限：首次绑定预算 8 秒，超了先返回（`deferred`/`pending`）交给守望循环接手；拖过上限 magpie 会判这次加载失败且不再重试，服务就再也起不来（同一类「页面卡住」的另一种成因）。
+- 带路页在桌面窗口不再只跳一次：跳失败不会换掉本页，改成每 0.7–2.5 秒再跳一次，服务回来就进看板；第 7 次起给出「服务还没起来」的说明和重试按钮。WKWebView 实测（本机 quicklook 之外单独搭的 harness）：连续 22 次导航失败后本页仍在、定时器照跑，服务起来后第 3 次跳成功。
+
+### 变更
+
+- `BUILD` 6 → 7（复用后的守望、加载预算都变了）。
+
 ## [0.2.2] - 2026-11-17
 
 ### 文档
@@ -63,6 +76,7 @@
 - 端口复用：同款服务连续两次探活成功即复用，否则每秒重试绑定、最多等 20 秒。
 - 看板为全内联单页：服务端把 css/js 内联进 HTML 并注入服务地址，适配 magpie 页面 opaque origin frame 的 CSP 限制。
 
+[0.2.3]: https://github.com/jerryjiao/magpie-tokentracker/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/jerryjiao/magpie-tokentracker/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/jerryjiao/magpie-tokentracker/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/jerryjiao/magpie-tokentracker/compare/v0.1.0...v0.2.0

@@ -28,9 +28,12 @@ import { apiGet, ensureRunning, probe, resolvePort, baseUrl } from "./lib/tokent
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SERVICE_NAME = "magpie-tokentracker";
-const BUILD = 6; // 服务行为变了就 +1：端口被占时老 build 不复用，等它退
-const REBIND_MS = 20000; // magpie 自升级交接时旧宿主几秒内退出，等它即可
-const REBIND_STEP_MS = 1000;
+const BUILD = 7; // 服务行为变了就 +1（0.2.3：复用后守望端口，见下面的 watchPort）
+// 首次绑定的预算。必须明显低于 magpie 插件加载的 20 秒上限（宿主 loadWait）：
+// 超了它就把这次加载判成失败、不再重试，服务于是永远起不来。
+const BIND_BUDGET_MS = 8000;
+const REBIND_STEP_MS = 500;
+const WATCH_MS = 750; // 复用之后盯端口的间隔
 const PAGE_DIR = path.join(HERE, "page");
 export const DEFAULT_PAGE_PORT = 3491;
 const USAGE_TTL_MS = 8000;
@@ -510,8 +513,17 @@ export async function startServer(rawOptions = {}) {
     }
   });
 
-  // 端口被占时（magpie 自升级交接、双实例、手动跑过一份）：同款服务连续两次探活
-  // 成功 → 直接复用；否则等旧实例退出再绑（升级交接里旧宿主几秒内就退）。
+  // 端口被占时（magpie 宿主重启交接、双实例、手动跑过一份）：同款服务在应答就先复用，
+  // 但复用之后必须一直守着它——别人的服务随时会随它的宿主一起退出。
+  //
+  // 实机事故（2026-11-17 16:33，日志对得上）：
+  //   16:33:04 宿主 A 绑定 3491
+  //   16:33:49 magpie 重启插件宿主
+  //   16:33:51 新宿主发现 3491 有同款服务 → same service already on 3491; reusing it
+  //   16:33:51 宿主 A 随 magpie 退出 → 3491 空了，新宿主不再重绑
+  // 带路页跳过去是死地址，WebKit 又把失败的那次导航和成功分不开，页面就停在
+  // 「正在打开本机看板…」不动（用户报的「又卡到这里」）。所以：复用成功也要守，
+  // 探活一失败就自己绑；绑不上（真被活着的另一个实例占着）就继续等，它退了我们接。
   const listenOnce = () =>
     new Promise((resolve, reject) => {
       const onError = (error) => {
@@ -538,33 +550,82 @@ export async function startServer(rawOptions = {}) {
     }
   };
 
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const bindOnce = async () => {
+    await listenOnce();
+    return server.address()?.port || port;
+  };
+
+  // 守望：复用（或端口被占）之后跑起来，探活失败就绑；绑上就停。
+  let watchTimer = null;
+  const stopWatch = () => {
+    if (watchTimer) clearTimeout(watchTimer);
+    watchTimer = null;
+  };
+  const watchPort = () => {
+    if (watchTimer || port === 0) return;
+    const tick = async () => {
+      watchTimer = null;
+      if (server.listening) return; // 已经接过来，守望结束
+      if (await probeFingerprint(port)) {
+        watchTimer = setTimeout(() => void tick(), WATCH_MS);
+        watchTimer.unref?.();
+        return;
+      }
+      try {
+        const taken = await bindOnce();
+        log(`board on http://127.0.0.1:${taken}/ (took over from a service that quit; TokenTracker ${baseUrl(options.tokentrackerPort)})`);
+        return;
+      } catch {
+        watchTimer = setTimeout(() => void tick(), WATCH_MS);
+        watchTimer.unref?.();
+      }
+    };
+    watchTimer = setTimeout(() => void tick(), WATCH_MS);
+    watchTimer.unref?.();
+  };
+  const close = () => {
+    stopWatch();
+    try {
+      server.close();
+    } catch {
+      // 没绑上过就没什么可关的
+    }
+  };
+
   let bound = null;
   if (port !== 0) {
-    for (let waited = 0; ; waited += REBIND_STEP_MS) {
+    const deadline = Date.now() + BIND_BUDGET_MS;
+    for (;;) {
       const first = await probeFingerprint(port);
       if (first) {
         const second = await probeFingerprint(port);
         if (second) {
           if (first.build !== BUILD) log(`found same service (build ${first.build} != ${BUILD}) on ${port}; reusing it`);
           else log(`same service already on ${port}; reusing it`);
-          server.close(); // 没绑成，把没用的 server 对象丢掉
           log(`board on http://127.0.0.1:${port}/ (reused; TokenTracker ${baseUrl(options.tokentrackerPort)})`);
-          return { port, server: null, close: () => {}, reused: true };
+          watchPort();
+          return { port, server, close, reused: true };
         }
       }
       try {
-        await listenOnce();
-        bound = server.address()?.port || port;
+        bound = await bindOnce();
         break;
       } catch (error) {
-        if (error?.code !== "EADDRINUSE" || waited + REBIND_STEP_MS > REBIND_MS) throw error;
-        await new Promise((r) => setTimeout(r, REBIND_STEP_MS));
+        if (error?.code !== "EADDRINUSE") throw error;
+        if (Date.now() >= deadline) {
+          // 端口被一个不应答的东西占着（衔接里旧进程还没退干净）：先返回，不要把
+          // 插件加载拖到 magpie 的 20 秒上限上；守望循环会在它退出后接手绑定。
+          log(`port ${port} is taken but not answering; taking it over when it frees`);
+          watchPort();
+          return { port, server, close, reused: true, pending: true };
+        }
+        await sleep(REBIND_STEP_MS);
       }
     }
   } else {
-    await listenOnce();
-    bound = server.address()?.port || port;
+    bound = await bindOnce();
   }
   log(`board on http://127.0.0.1:${bound}/ (TokenTracker ${baseUrl(options.tokentrackerPort)})`);
-  return { port: bound, server, close: () => server.close() };
+  return { port: bound, server, close };
 }
