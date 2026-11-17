@@ -145,7 +145,9 @@
     say(service ? w.ready : w.readyLocal);
     setTimeout(() => {
       try {
-        location.replace(target);
+        // assign 而不是 replace：看板页因此能 history.back() 回到这一页，
+        // 「跳过去就白屏、回不来」是上一版的事故。
+        location.assign(target);
       } catch {
         // 下面的 meta refresh 兜底
       }

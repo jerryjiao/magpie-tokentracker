@@ -127,6 +127,11 @@ button.ghost {
 }
 button.ghost:hover { border-color: var(--muted); }
 button.ghost:disabled { opacity: 0.55; cursor: default; }
+button.ghost.is-on {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
 
 button.link {
   appearance: none;
@@ -385,6 +390,22 @@ progress.quota-bar::-moz-progress-bar {
   font-size: 12.5px;
 }
 .cloud-fine { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.cloud-open {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.cloud-open p { margin: 0 0 8px; color: var(--warn); font-size: 13px; }
+.cloud-open input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--fg);
+  font: 13px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
 
 /* ---------- 离线 ---------- */
 

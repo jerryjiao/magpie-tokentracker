@@ -115,6 +115,12 @@ test("服务端：页面、静态资源和 CSP", async (t) => {
   assert.doesNotMatch(html, /<link rel="stylesheet"/);
   assert.doesNotMatch(html, /<script src=/);
   assert.match(html, /const SERVICE_BASE = "http:\/\/127\.0\.0\.1:\d+"/);
+  // 外链不能整页跳走：沙盒里跳到 7680 就是白屏，而且没有返回。
+  assert.match(html, /noopener,noreferrer/);
+  assert.doesNotMatch(html, /location\.href = url/);
+  // 从插件页跳过来时，看板页要留一条回退的路：白屏也能退回带路页重试。
+  assert.match(html, /id="back"/);
+  assert.match(html, /history\.back\(\)/);
 
   const js = await fetch(`http://127.0.0.1:${board.port}/app.js`);
   assert.equal(js.status, 200);

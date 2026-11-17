@@ -359,6 +359,9 @@ export async function startServer(rawOptions = {}) {
 
   const server = createServer(async (req, res) => {
     guardHeaders(res);
+    if (process.env.MAGPIE_TOKENTRACKER_DEBUG) {
+      console.log(`[debug] ${req.method} ${req.url} host=${req.headers.host} origin=${req.headers.origin} ua=${(req.headers["user-agent"] || "").slice(0, 40)}`);
+    }
     try {
       if (!hostIsLoopback(req)) {
         res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });

@@ -25,7 +25,10 @@
       title: "TokenTracker 用量",
       sub: "本机 TokenTracker 追踪的 token 与花费",
       today: "今天", d7: "7 天", d30: "30 天",
-      refresh: "刷新", cloud: "云",
+      refresh: "刷新", cloud: "云同步",
+      back: "← 返回插件页",
+      cloudHint: "官方账号登录、云同步和排行榜",
+      cloudOpenBlocked: "这个窗口打不开外链。直接跳过去会变成白屏，也回不来。把下面的地址复制到浏览器打开，看板留在这里。",
       tokens: "总 Token", cost: "花费", cache: "缓存读取", sessions: "会话",
       input: "输入", output: "输出", cacheWrite: "缓存写入", cacheRead: "缓存读取",
       perSession: "均 / 会话", cacheHit: "命中率", sessionsHint: "有用量的会话",
@@ -58,6 +61,9 @@
       sub: "Token usage and cost tracked by the local TokenTracker",
       today: "Today", d7: "7 days", d30: "30 days",
       refresh: "Refresh", cloud: "Cloud",
+      back: "← Back",
+      cloudHint: "Official account, cloud sync, and the leaderboard",
+      cloudOpenBlocked: "This window can't open outside links. Leaving this page turns it into a blank screen with no way back. Copy the address below into a browser. This board stays here.",
       tokens: "Total tokens", cost: "Cost", cache: "Cache read", sessions: "Sessions",
       input: "input", output: "output", cacheWrite: "cache write", cacheRead: "cache read",
       perSession: "avg / session", cacheHit: "hit rate", sessionsHint: "sessions with usage",
@@ -176,7 +182,10 @@
     $("title").textContent = T.title;
     $("sub").textContent = T.sub;
     $("refresh").textContent = T.refresh;
+    $("back").textContent = T.back;
     $("cloud-btn").textContent = T.cloud;
+    $("cloud-btn").title = T.cloudHint;
+    $("cloud-open-text").textContent = T.cloudOpenBlocked;
     $("offline-title").textContent = T.offlineTitle;
     $("offline-text").textContent = T.offlineText;
     $("offline-retry").textContent = T.offlineRetry;
@@ -391,7 +400,24 @@
 
   // 沙盒 frame 里外链用 location.href 导航，不用 window.open。
   function go(url) {
-    if (url) location.href = url;
+    if (!url) return;
+    // 沙盒 frame 通常没有弹窗权限，window.open 返回 null。
+    // 绝不能 location.href：那会把看板整页换成外链。7680 没起来就是白屏，而且没有返回。
+    let popup = null;
+    try {
+      popup = window.open(url, "_blank", "noopener,noreferrer");
+    } catch {
+      popup = null;
+    }
+    if (popup) return;
+    const box = $("cloud-open");
+    const input = $("cloud-open-url");
+    if (!box || !input) return;
+    input.value = url;
+    box.hidden = false;
+    box.scrollIntoView({ block: "nearest" });
+    input.focus();
+    input.select();
   }
 
   function renderCloud(data) {
@@ -496,13 +522,15 @@
     const open = panel.hidden;
     panel.hidden = !open;
     $("cloud-btn").setAttribute("aria-expanded", String(open));
-    if (open) {
-      if (cloud.data) renderCloud(cloud.data);
-      else {
-        $("cloud-body").innerHTML = `<p class="empty">${escapeHtml(T.loading)}</p>`;
-        loadCloud();
-      }
+    $("cloud-btn").classList.toggle("is-on", open);
+    if (!open) return;
+    if (cloud.data) renderCloud(cloud.data);
+    else {
+      $("cloud-body").innerHTML = `<p class="empty">${escapeHtml(T.loading)}</p>`;
+      loadCloud();
     }
+    // 面板在页面最底部。不滚过去，点「云同步」看起来像没反应。
+    panel.scrollIntoView({ block: "start" });
   }
 
   function startTimer() {
@@ -524,6 +552,17 @@
     load({ force: true });
     for (const name of Object.keys(panels)) loadPanel(name, { force: true });
   });
+  // 看板是插件页 frame 里跳过来的，回退一页就是 magpie 里的带路页。
+  // 直接用浏览器打开时 frame 没有上一页，隐藏按钮。
+  const back = $("back");
+  if (back) {
+    if (history.length > 1) {
+      back.hidden = false;
+      back.addEventListener("click", () => history.back());
+    } else {
+      back.hidden = true;
+    }
+  }
   $("cloud-btn").addEventListener("click", toggleCloud);
   $("offline-retry").addEventListener("click", () => load({ force: true }));
   document.addEventListener("visibilitychange", () => {

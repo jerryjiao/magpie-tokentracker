@@ -18,13 +18,14 @@
         </div>
       </div>
       <div class="actions">
+        <button type="button" id="back" class="ghost" hidden>← 返回</button>
         <div class="segmented" id="periods" role="tablist">
           <button type="button" role="tab" data-period="today" aria-selected="false">今天</button>
           <button type="button" role="tab" data-period="7d" aria-selected="true">7 天</button>
           <button type="button" role="tab" data-period="30d" aria-selected="false">30 天</button>
         </div>
         <button type="button" id="refresh" class="ghost">刷新</button>
-        <button type="button" id="cloud-btn" class="ghost" aria-expanded="false" aria-controls="cloud-panel">云</button>
+        <button type="button" id="cloud-btn" class="ghost" aria-expanded="false" aria-controls="cloud-panel" title="官方账号登录、云同步和排行榜">云同步</button>
       </div>
     </header>
 
@@ -91,6 +92,10 @@
     <section class="panel wide" id="cloud-panel" hidden>
       <header class="panel-head"><h2 id="cloud-title"></h2></header>
       <div id="cloud-body"></div>
+      <div id="cloud-open" class="cloud-open" hidden>
+        <p id="cloud-open-text"></p>
+        <input id="cloud-open-url" type="text" readonly spellcheck="false">
+      </div>
     </section>
 
     <section class="panel offline" id="offline" hidden>
